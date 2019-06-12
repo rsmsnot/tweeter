@@ -21,10 +21,11 @@ body {
 }
 
 main {
-  width: 450px;
+  width: 550px;
   background-color: white;
   padding-top: 140px;
   padding-left: 40px;
+  padding-right: 40px;
   padding-bottom: 140px;
   margin: auto;
   
@@ -33,3 +34,66 @@ main {
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
+
+ .tweet {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+  transition: 0.3s;
+ }
+
+ .tweet:hover {
+   opacity:1;
+ }
+
+
+ article p {
+  padding: 0.5em 0.5em 1em 0.5em;
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+  min-height: 100px;
+  font-size: 1.5em;
+  
+ }
+
+ .avatar {
+   float: left;
+  border: 5px;
+  height: 70px;
+   width: 70px;
+   margin: 3px;
+   border-radius: 5px;
+   border: 1px solid lightgrey;
+ }
+
+ .handle {
+   float:right;
+   padding: 0.5em 0.5em 1em 0.5em;
+   
+ }
+ 
+ .username {
+   padding: 5px;
+   border-bottom: 15px;
+   margin: 0;
+  font-size: 2em;
+  float: left;
+ }
+header {
+  background-color: #EEEEEE;
+  border-bottom: 1px solid lightgrey;
+  height: 80px;
+}
+
+ footer {
+
+   padding: 7px;
+   
+}
+/* 
+img .icons {
+  height: 10px;
+   width: 10px;
+} */
