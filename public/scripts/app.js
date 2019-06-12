@@ -5,27 +5,40 @@
  */
 // calculate time ago
 function timeAgo(ts) {
-    const d = new Date();
-    const nowTs = Math.floor(d.getTime() / 1000);
-    const seconds = nowTs - ts;
+    // let seconds = Number(ts);
+    let d = Math.floor(Number(ts) / (3600 * 24));
+    let h = Math.floor(Number(ts) % (3600 * 24) / 3600);
+    let m = Math.floor(Number(ts) % 3600 / 60);
+    let s = Number(ts)
+    // console.log(seconds);
 
-    if (seconds > 2 * 24 * 3600) {
-        return "a few days ago";
+    // let totalDays = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
+    // let totalHours = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    // let totalMinutes = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    // let totalSeconds = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    // return totalDays + totalHours + totalMinutes + totalSeconds;
+    // console.log(d, h, m, s)
+    if (d > 365) {
+        return d % 365 + " years ago";
     }
-    if (seconds > 24 * 3600) {
-        return "yesterday";
+    if (d > 31 && d < 365) {
+        return d % 31 + " months ago";
     }
-
-    if (seconds > 3600) {
-        return "a few hours ago";
+    if (h > 24 && d < 31) {
+        return d + " days ago";
     }
-    if (seconds > 1800) {
-        return "Half an hour ago";
+    if (m > 60 && h < 24) {
+        return h + " hours ago";
     }
-    if (seconds > 60) {
-        return Math.floor(seconds / 60) + " minutes ago";
+    if (s > 60 && m < 60) {
+        return m + " minutes ago";
     }
-    return "A long time ago"
+    if (s < 60) {
+        return s + " seconds ago";
+    }
+    // if(totalDays > 365) {
+    //     return Math.round(totalDays / 365) + " years ago"
+    // }
 }
 
 
@@ -70,7 +83,7 @@ $(document).ready(function () {
             "content": {
                 "text": "If I have seen further it is by standing on the shoulders of giants"
             },
-            "created_at": 1461116232227
+            "created_at": 1461
         },
         {
             "user": {
