@@ -28,6 +28,9 @@
     <!-- Character Counter JS -->
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
 
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   </head>
 
   <body>
@@ -36,17 +39,24 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
+      <button class="btn btn-secondary btn-lg" type="button" id="toggleFormButton" value="Compose tweet!">Compose Tweet!</button>
     </nav>
 
     <!-- Page-specific (main) content here -->
     <main class="container">
-        <section class="new-tweet">
+        <section id="tweetForm" class="new-tweet">
             <h2>Compose Tweet</h2>
             <hr>
-            <form method="POST" action="/tweets/">
+            <form name="myForm" method="POST" action="/tweets/">
               <textarea class="text-area" name="text" placeholder="What are you humming about?"></textarea>
               <input class="tweet-button" type="submit" value="Tweet">
               <span class="counter">140</span>
+              <div id="alert1" class="alert alert-danger">
+                  <strong>Error!</strong> Your tweet contains too many characters
+                </div>
+              <div id="alert2" class="alert alert-danger">
+                  <strong>Error!</strong> Your cannot post an empty tweet
+                </div>
             </form>
           </section>
           <section class="tweet-container">

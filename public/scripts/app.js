@@ -10,6 +10,9 @@ function timeAgo(ts) {
     const nowTs = Math.floor(d.getTime() / 1000);
     const seconds = nowTs - ts;
 
+
+     // LOOK AT MOMENTS.JS
+
     if (seconds > 2 * 24 * 3600) {
         return "a few days ago";
     }
@@ -80,57 +83,66 @@ $(document).ready(function () {
             .text(tweetData.user.handle)
             .appendTo(header);
 
-        let mainText = $("<p>").text(tweetData.content.text).appendTo(newTweet);
+        $("<p>").text(tweetData.content.text).appendTo(newTweet);
 
-        let footer = $('<footer>').text(timeAgo(tweetData.created_at)).appendTo(newTweet);
+        $('<footer>').text(timeAgo(tweetData.created_at)).appendTo(newTweet);
 
         return newTweet;
     }
 
-    const tweetData = []
+    // const tweetData = []
 
     function renderTweets(tweets) {
         for (let people of tweets) {
             $('.tweet-container').prepend(createTweetElement(people));
         }
     }
-    renderTweets(tweetData);
+    // renderTweets(tweetData);
+
+
+    // TOGGLE FORM BUTTON
+
+    $("#toggleFormButton").click(function(){
+        $("#tweetForm").slideToggle(() => {
+            $('.text-area').focus()
+        });
+    });
 
     
 
 
 
-    $(function () {
-        var form = $('form');
 
-        $("form").submit(function (event) {
+        var form = $('form');
+        let textArea = $('.text-area');
+
+        form.submit(function (event) {
             event.preventDefault();
-            var formData = $(form).serialize()
+            var formData = form.serialize()
             console.log(formData)
-            if($(".text-area").val().length > 140) {
+            if(textArea.val().length > 140) {
                 console.log( "Too many characters")
+                $("#alert1").slideToggle()
                 return
 
             } 
-            if($(".text-area").val().length === 0) {
-                console.log("NOTHING")
+            if(textArea.val().length === 0) {
+                $("#alert2").slideToggle()
                 return
             }
 
-            $.post( "/tweets", formData, function callbackFunction() {
+            $.post( "/tweets", formData, function() {
                 $(".tweet-container").empty();
                 loadTweets();
             })
-            
         });
-    });
+
 
 
     function loadTweets() {
         $.get("/tweets") 
             .then((getTweets)=> {
                 renderTweets(getTweets);
-                console.log(getTweets)
             });
             
     }  

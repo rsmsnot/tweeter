@@ -92,8 +92,17 @@ header {
    padding: 7px;
    
 }
-/* 
-img .icons {
-  height: 10px;
-   width: 10px;
-} */
+
+#tweetForm {
+  display: none;
+}
+
+#alert1 {
+  display: none;
+  margin: 15px;
+}
+
+#alert2 {
+  display: none;
+  margin: 15px;
+}
