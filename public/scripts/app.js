@@ -94,7 +94,7 @@ $(document).ready(function () {
 
     function renderTweets(tweets) {
         for (let people of tweets) {
-            $('.tweet-container').prepend(createTweetElement(people));
+            $('.tweet-container').append(createTweetElement(people));
         }
     }
     // renderTweets(tweetData);
@@ -107,10 +107,6 @@ $(document).ready(function () {
             $('.text-area').focus()
         });
     });
-
-    
-
-
 
 
         var form = $('form');
