@@ -100,6 +100,7 @@ $(document).ready(function () {
             $(".tweet-container").empty();
             loadTweets();
             $('#output').val('');
+            $('.counter').val('');
 
         })
     });
