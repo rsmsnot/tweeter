@@ -21,9 +21,9 @@ This repository is the starter code for the project: Students will fork and clon
 - Mongodb
 
 
-![1](/readme-images/1.png)
+![1](/readme-images/Tweeter-1.png)
 
-![2](/readme-images/2.png)
+![2](/readme-images/Tweeter-2.png)
 
-![3](/readme-images/3.png)
+![3](/readme-images/Tweeter-3.png)
 
