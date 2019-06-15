@@ -1,10 +1,6 @@
-/* eslint-disable no-console */
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-// calculate time ago
+
+
+// CALCULATE RELATIVE TIME FUNCTION
 function timeAgo(ts) {
     let now = new Date();
     let difference = (now - ts) / 1000;
@@ -20,7 +16,7 @@ function timeAgo(ts) {
     } else if (minutes < 60) {
         return minutes + " minutes ago";
     } else if (hours < 24) {
-        return hours + " hours ago"
+        return hours + " hours ago";
     } else if (days < 30) {
         return days + " days ago";
     } else if (months < 12) {
@@ -31,12 +27,14 @@ function timeAgo(ts) {
 }
 
 
+//CREATE TWEET FUNCTION
+
 $(document).ready(function () {
     function createTweetElement(tweetData) {
 
-        var newTweet = $("<article>").addClass("tweet");
-        let header = $("<header>").appendTo(newTweet);
+        let newTweet = $("<article>").addClass("tweet");
 
+        let header = $("<header>").appendTo(newTweet);
         $("<img>")
             .addClass("avatar")
             .attr("src", tweetData.user.avatars.small)
@@ -58,7 +56,7 @@ $(document).ready(function () {
     }
 
 
-
+    // RENDER TWEETS FUNCTION
 
     function renderTweets(tweets) {
         for (let people of tweets) {
@@ -71,32 +69,27 @@ $(document).ready(function () {
 
     $("#toggleFormButton").click(function () {
         $("#tweetForm").slideToggle(() => {
-            $('.text-area').focus()
+            $('.text-area').focus();
         });
     });
 
 
+    // FORM SUBMISSION ERRORS
+
     var form = $('form');
     let textArea = $('.text-area');
-
-
-    // FORM SUBMISSION ERRORS
 
     form.submit(function (event) {
         event.preventDefault();
         var formData = form.serialize()
-        console.log(formData)
         if (textArea.val().length > 140) {
-            console.log("Too many characters")
-            $("#alert1").slideToggle()
-            return
+            $("#alert1").slideToggle();
+            return;
 
         }
         if (textArea.val().length === 0) {
             $("#alert2").slideToggle();
             if (textArea.val().length > 0) {
-
-
                 return;
             }
         }
@@ -113,11 +106,11 @@ $(document).ready(function () {
 
 
     // LOAD EXISTING TWEETS
+
     function loadTweets() {
-        $.get("/tweets")
-            .then((getTweets) => {
-                renderTweets(getTweets);
-            });
+        $.get("/tweets").then((getTweets) => {
+            renderTweets(getTweets);
+        });
 
     }
     loadTweets();
