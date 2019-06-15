@@ -6,6 +6,10 @@
     border-radius: 5px;
 }
 
+.tweet-container {
+    word-break: break-all;
+}
+
 h2 {
     margin: 5px;
     margin-bottom: 0;

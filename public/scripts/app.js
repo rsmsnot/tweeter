@@ -6,70 +6,37 @@
  */
 // calculate time ago
 function timeAgo(ts) {
-    const d = new Date();
-    const nowTs = Math.floor(d.getTime() / 1000);
-    const seconds = nowTs - ts;
+    let now = new Date();
+    let difference = (now - ts) / 1000;
+    let seconds = Math.round(difference);
+    let minutes = Math.round(difference / 60);
+    let hours = Math.round(difference / 3600);
+    let days = Math.round(difference / 86400);
+    let months = Math.round(difference / 2600640);
+    let years = Math.round(difference / 31207680);
 
-
-     // LOOK AT MOMENTS.JS
-
-    if (seconds > 2 * 24 * 3600) {
-        return "a few days ago";
+    if (seconds < 60) {
+        return seconds + " seconds ago";
+    } else if (minutes < 60) {
+        return minutes + " minutes ago";
+    } else if (hours < 24) {
+        return hours + " hours ago"
+    } else if (days < 30) {
+        return days + " days ago";
+    } else if (months < 12) {
+        return months + " months ago";
+    } else {
+        return years + " years";
     }
-    if (seconds > 24 * 3600) {
-        return "yesterday";
-    }
-
-    if (seconds > 3600) {
-        return "a few hours ago";
-    }
-    if (seconds > 1800) {
-        return "Half an hour ago";
-    }
-    if (seconds > 60) {
-        return Math.floor(seconds / 60) + " minutes ago";
-    }
-    return "A long time ago"
 }
-    // let seconds = Number(ts);
-    // let d = Math.floor(Number(ts) / (3600 * 24));
-    // let h = Math.floor(Number(ts) % (3600 * 24) / 3600);
-    // let m = Math.floor(Number(ts) % 3600 / 60);
-    // let s = Number(ts)
-    // console.log(seconds);
-
-    // console.log(d, h, m, s)
-    // if (d > 365) {
-    //     return d % 365 + " years ago";
-    // }
-    // if (d > 31 && d < 365) {
-    //     return d % 31 + " months ago";
-    // }
-    // if (h > 24 && d < 31) {
-    //     return d + " days ago";
-    // }
-    // if (m > 60 && h < 24) {
-    //     return h + " hours ago";
-    // }
-    // if (s > 60 && m < 60) {
-    //     return m + " minutes ago";
-    // }
-    // if (s < 60) {
-    //     return s + " seconds ago";
-    // }
-    // if(totalDays > 365) {
-    //     return Math.round(totalDays / 365) + " years ago"
-    // }
-// }
-
 
 
 $(document).ready(function () {
     function createTweetElement(tweetData) {
 
         var newTweet = $("<article>").addClass("tweet");
-
         let header = $("<header>").appendTo(newTweet);
+
         $("<img>")
             .addClass("avatar")
             .attr("src", tweetData.user.avatars.small)
@@ -90,57 +57,68 @@ $(document).ready(function () {
         return newTweet;
     }
 
-    // const tweetData = []
+
+
 
     function renderTweets(tweets) {
         for (let people of tweets) {
             $('.tweet-container').append(createTweetElement(people));
         }
     }
-    // renderTweets(tweetData);
 
 
     // TOGGLE FORM BUTTON
 
-    $("#toggleFormButton").click(function(){
+    $("#toggleFormButton").click(function () {
         $("#tweetForm").slideToggle(() => {
             $('.text-area').focus()
         });
     });
 
 
-        var form = $('form');
-        let textArea = $('.text-area');
+    var form = $('form');
+    let textArea = $('.text-area');
 
-        form.submit(function (event) {
-            event.preventDefault();
-            var formData = form.serialize()
-            console.log(formData)
-            if(textArea.val().length > 140) {
-                console.log( "Too many characters")
-                $("#alert1").slideToggle()
-                return
 
-            } 
-            if(textArea.val().length === 0) {
-                $("#alert2").slideToggle()
-                return
+    // FORM SUBMISSION ERRORS
+
+    form.submit(function (event) {
+        event.preventDefault();
+        var formData = form.serialize()
+        console.log(formData)
+        if (textArea.val().length > 140) {
+            console.log("Too many characters")
+            $("#alert1").slideToggle()
+            return
+
+        }
+        if (textArea.val().length === 0) {
+            $("#alert2").slideToggle();
+            if (textArea.val().length > 0) {
+
+
+                return;
             }
-
-            $.post( "/tweets", formData, function() {
-                $(".tweet-container").empty();
-                loadTweets();
-            })
-        });
+        }
 
 
+        //POST TWEET AND RESET TEXT AREA BACK TO DEFAULT
+        $.post("/tweets", formData, function () {
+            $(".tweet-container").empty();
+            loadTweets();
+            $('#output').val('');
 
+        })
+    });
+
+
+    // LOAD EXISTING TWEETS
     function loadTweets() {
-        $.get("/tweets") 
-            .then((getTweets)=> {
+        $.get("/tweets")
+            .then((getTweets) => {
                 renderTweets(getTweets);
             });
-            
-    }  
-    loadTweets(); 
+
+    }
+    loadTweets();
 });
